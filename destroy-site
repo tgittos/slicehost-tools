@@ -1,0 +1,25 @@
+#! /bin/sh
+
+# Arguments:
+# $1 - domain to destroy
+
+# Clean params
+site=$(echo $1 | sed 's/\///')
+
+# Zip up home directory and log files
+echo "Destroying $site..."
+if [ ! -d "$site/" ]; then
+	echo "No such domain: $site"
+	exit 1
+else
+	zip -r  ~/$site.zip $site/.
+	rm -Rf $site/
+fi
+
+# Disabled nginx config file
+sudo mv /etc/nginx/sites-enabled/$site /etc/nginx/sites-available/$site
+
+# Restart ngingx
+echo "Restarting nginx..."
+sudo /etc/init.d/nginx stop
+sudo /etc/init.d/nginx start
