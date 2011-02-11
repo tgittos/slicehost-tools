@@ -8,12 +8,12 @@ site=$(echo $1 | sed 's/\///')
 
 # Zip up home directory and log files
 echo "Destroying $site..."
-if [ ! -d "$site/" ]; then
+if [ ! -d "/var/www/$site/" ]; then
 	echo "No such domain: $site"
 	exit 1
 else
-	zip -r  ~/$site.zip $site/.
-	rm -Rf $site/
+	zip -r  $site.zip /var/www/$site/.
+	rm -Rf /var/www/$site/
 fi
 
 # Disabled nginx config file

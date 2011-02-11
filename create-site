@@ -5,18 +5,20 @@
 
 # Create a home directory and log files
 echo "Setting up $1..."
-if [ ! -d "$1" ]; then
-	mkdir $1
-	mkdir $1/logs
-	mkdir $1/backup
-	mkdir $1/cgi-bin
-	mkdir $1/private
-	mkdir $1/public
+if [ ! -d "/var/www/$1" ]; then
+	mkdir /var/www/$1
+	mkdir /var/www/$1/logs
+	mkdir /var/www/$1/backup
+	mkdir /var/www/$1/cgi-bin
+	mkdir /var/www/$1/private
+	mkdir /var/www/$1/public
 fi
-touch $1/logs/access.log
-touch $1/logs/error.log
-touch $1/public/index.html
-echo "<html><head><title>$1</title></head><body><h1>$1</h1></body></html>" > $1/public/index.html
+touch /var/www/$1/logs/access.log
+touch /var/www/$1/logs/error.log
+if [ ! -f "www/$1/public/index.html" ]; then
+  touch /var/www/$1/public/index.html
+  echo "<html><head><title>$1</title></head><body><h1>$1</h1></body></html>" > /var/www/$1/public/index.html
+fi
 
 # Create an nginx entry based on a base entry
 if [ ! -f "/etc/nginx/sites-available/$1" ]; then
