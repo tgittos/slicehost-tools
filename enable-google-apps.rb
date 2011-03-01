@@ -20,7 +20,7 @@ mx_values = [
 ]
 
 mx_values.each do |mx|
-  record = Record.new(:record_type => 'MX', :zone_id => zone.id, :name => 'mail', :data => mx[:data], :aux => mx[:aux])
+  record = Record.new(:record_type => 'MX', :zone_id => zone.id, :name => zone.origin, :data => mx[:data], :aux => mx[:aux])
   record.save 
 end
 
